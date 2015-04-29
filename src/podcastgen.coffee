@@ -20,12 +20,21 @@ module.exports = (opts) ->
     rss: {
       channel: [
         {"atom:link":'', attr: { href: escapeSpecialChars opts.podcastUrl, rel: "self", type: "application/xml" }},
+        {"itunes:image":'', attr: { href: escapeSpecialChars opts.imageUrl }},
+        {"itunes:author": opts.author},
         {title: opts.title},
+        {description: opts.description},
+        {"itunes:summary": opts.summary},
+        {language: opts.language},
+        {"itunes:subtitle": opts.subtitle},
       ].concat opts.items.map (item) ->
         itemUrl = escapeSpecialChars url.resolve((opts.baseUrl||''), item.path)
         {
           item: [
             {title: item.title},
+            {"itunes:author": item.author},
+            {"itunes:image":'', attr: { href: escapeSpecialChars item.imageUrl }},
+            {"itunes:duration": item.duration},
             {'media:content':'', attr: { url: itemUrl, type:"audio/mpeg", medium:"audio", expression:"full" }},
             {enclosure:'', attr: { url: itemUrl, type: "audio/mpeg" }},
             {pubDate: item.date},
