@@ -7,18 +7,30 @@ generate itunes-compatible podcasts from cson or json
 `example/jsdfpodcast.cson`:
 ```coffee
 title: "jsdf podcast",
+author: "john p. cast",
+subtitle: "john's fab podcast subtitle",
+description: "john's fab podcast description",
+summary: "john's fab podcast summary",
 baseUrl: "http://files.ktfr.net/podcast/",
 podcastUrl: "http://files.ktfr.net/podcast/podcast.xml",
+imageUrl: "http://lorempixel.com/500/500/abstract/",
+language: "en-us",
 items: [
   {
     title: "cashmere cat mix",
+    author: "cashmere cat",
     path: "cashmere.mp3", # relative from baseUrl
+    duration: "6:43",
     date: "Mon, 3 Mar 2014 00:00:00 +1100", # RFC 2822 formatted date
+    imageUrl: "http://lorempixel.com/500/500/animals/"
   },
   {
     title: "jacques greene mix",
+    author: "jacques greene",
     path: "LWEPodcast198JacquesGreene.mp3",
-    date: "Mon, 14 Apr 2014 00:00:00 +1100", 
+    duration: 4660,
+    date: "Mon, 14 Apr 2014 00:00:00 +1100",
+    imageUrl: "http://lorempixel.com/500/500/technics/"
   }
 ]
 ```
@@ -55,6 +67,7 @@ podcastgen example/jsdfpodcast.cson > podcast.xml
 
 ### api usage
 ```coffee
+fs = require 'fs'
 podcastgen = require 'podcastgen'
 
 rssdata = podcastgen({
@@ -62,6 +75,9 @@ rssdata = podcastgen({
   baseUrl: "http://example.com/podcast/",
   ...
 })
+
+rssfile = fs.createWriteStream 'mypodcast.rss'
+rssfile.write rssdata
 ```
 
 ### install
